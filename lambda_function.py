@@ -1,4 +1,4 @@
-import json, boto3, requests, subprocess, os, http.cookiejar, json
+import json, boto3, requests, subprocess, os, http.cookiejar
 from threading import Thread
 from glob import glob
 
@@ -103,7 +103,7 @@ def lambda_handler(event, context):
 
     # Getting videos from the personal feed.
     # Apparently, regardless of the query parameters TikTok will give you exactly 8 videos per GET request.
-    res = requests.get(f"https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/feed/?carrier_region={GEOLOCK}&residence={GEOLOCK}&op_region={GEOLOCK}&region={GEOLOCK}&current_region={GEOLOCK}&app_name=trill", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
+    res = requests.get(f"https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/feed/?type=ForYou&carrier_region={GEOLOCK}&residence={GEOLOCK}&op_region={GEOLOCK}&region={GEOLOCK}&current_region={GEOLOCK}&app_name=trill", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
     authors_and_videos = {}
     for video in res:
         authors_and_videos.setdefault(video["author"]["unique_id"], []).append(video["aweme_id"])
