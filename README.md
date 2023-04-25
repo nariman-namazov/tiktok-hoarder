@@ -45,7 +45,7 @@ lambda_handler("te", "te")
 $ tree tiktok-hoarder
  |-lambda_function.py
  |-package
- | |-<your libraries installed via `pip install -r requirements --target ./tiktok-hoarder/package`>
+ | |-<your libraries installed via `pip install --target ./tiktok-hoarder/package requests`>
  |-yt-dlp
  |-yt-dlp.conf
 
