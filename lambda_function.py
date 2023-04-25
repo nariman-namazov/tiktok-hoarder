@@ -80,7 +80,7 @@ def shipToTelegram(username, videos):
         if not msg.json()["ok"]:
             print (f"Caught an error uploading {files} to Telegram:", msg.json())
             if FEEDBACK_CHANNEL != "/dev/null":
-                report = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", headers={"Content-Type": "application/json", "Cache-Control": "no-cache"}, json={"chat_id": FEEDBACK_CHANNEL, "is_personal": False, "text": f"Caught an error uploading {'https://www.tiktok.com/@' + username + '/video/' + video} to Telegram:\n{msg.json()}"})
+                report = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", headers={"Content-Type": "application/json", "Cache-Control": "no-cache"}, json={"chat_id": FEEDBACK_CHANNEL, "is_personal": False, "text": f"Caught an error uploading {'https://www.tiktok.com/@' + username + '/video/' + videos} to Telegram:\n{msg.json()}"})
                 if not report.json["ok"]:
                     print (f"Caught an error reporting another error to the feedback channel:\n{report.json()}")
 
