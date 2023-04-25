@@ -1,0 +1,786 @@
+{
+  "data": {
+    "add_ss_queries_header_open": 0,
+    "add_ss_queries_open": 0,
+    "add_ss_queries_plaintext_open": 1,
+    "detect_open": 0,
+    "disable_encrypt_switch": 0,
+    "disable_framed_transport": 3,
+    "frontier_urls": [
+      "wss://frontier.musical.ly/ws/v2"
+    ],
+    "get_network_interval": 150,
+    "group_failure_tolerant_limit": 5,
+    "hs_open": 1,
+    "http_show_hijack": 1,
+    "https_dns": [
+      "^http://l[fgh]\\.snssdk\\.com/.*",
+      "^http://i[stu]\\.snssdk\\.com/.*",
+      "^http://i[cbd]\\.snssdk\\.com/.*",
+      "^http://a3\\.bytecdn\\.cn/.*",
+      "^http://a5\\.bytecdn\\.cn/.*",
+      "^http://a6\\.bytecdn\\.cn/.*",
+      "^http://isub\\.snssdk\\.com/article/v1/tab_comments/.*",
+      "^http://i\\.snssdk\\.com/2/user/profile/v3/.*",
+      "^http://.*/concern/v2/follow/list/.*",
+      "^http://ichannel\\.snssdk\\.com/feedback/.*",
+      "^http://ichannel\\.snssdk\\.com/check_version/.*",
+      "^http://open\\.snssdk\\.com/auth/access/device/.*",
+      "^http://open\\.snssdk\\.com/data/stream/v3/.*",
+      "^http://open\\.snssdk\\.com/data/stream/tt_sl/app_list/v1/.*",
+      "^http://open\\.snssdk\\.com/data/stream/tt_sl/app_setting/v1/.*",
+      "^http://open\\.snssdk\\.com/data/stream/tt_sl/app_setting/v2/.*",
+      "^http://open\\.snssdk\\.com/data/stream/dislike/tt_sl/v1/.*",
+      "^http://log\\.snssdk\\.com/service/2/app_log_config/.*",
+      "^http://a[136]\\.pstatp\\.com/.*"
+    ],
+    "https_dns_err_max": 3,
+    "https_retry_http": 1,
+    "https_to_http": 1,
+    "i_host_list": [],
+    "i_host_max_fail": 2,
+    "i_host_select_interval": 1800,
+    "i_host_select_open": 0,
+    "mapping": {
+      "i": "lf.snssdk.com",
+      "log": "ib.snssdk.com"
+    },
+    "ok_http3_open": 1,
+    "ok_http_open": 1,
+    "send_tnc_host_arrays": [
+      "dm16.musical.ly",
+      "dm-maliva-quic.byteoversea.com",
+      "dm16.tiktokv.com"
+    ],
+    "share_cookie_host_list": ".musical.ly,.snssdk.com,.tiktok.com,.byteoversea.com,.tiktokv.com,.toutiao50.com,.xzcs3zlph.com,.mzfvozqybf.com,.qfyf1toi.com",
+    "tc": {
+      "dispatch": [
+        {
+          "traffic": {
+            "domain": {
+              "pattern": "(https?)://(.*)/service/2/app_log/(.*)",
+              "value": "$1://applog.musical.ly/service/2/app_log/$3"
+            }
+          }
+        },
+        {
+          "traffic": {
+            "domain": {
+              "pattern": "(https?)://(.*)/service/2/device_register/(.*)",
+              "value": "$1://applog.musical.ly/service/2/device_register/$3"
+            }
+          }
+        },
+        {
+          "traffic": {
+            "domain": {
+              "pattern": "(https?)://(.*)/service/2/app_alert/(.*)",
+              "value": "$1://applog.musical.ly/service/2/app_alert/$3"
+            }
+          }
+        },
+        {
+          "traffic": {
+            "domain": {
+              "pattern": "(https?)://(.*)/service/2/app_alert_check/(.*)",
+              "value": "$1://applog.musical.ly/service/2/app_alert_check/$3"
+            }
+          }
+        },
+        {
+          "traffic": {
+            "domain": {
+              "pattern": "(https?)://(.*)/service/2/log_settings/(.*)",
+              "value": "$1://applog.musical.ly/service/2/log_settings/$3"
+            }
+          }
+        }
+      ]
+    },
+    "tnc_config": {
+      "all_http_error_code": 1,
+      "detect_enable": 1,
+      "host_replace_map": {},
+      "http_code_black": "",
+      "local_enable": 0,
+      "local_host_filter": [
+        "api2.musical.ly",
+        "api-m.tiktok.com",
+        "api2-1.musical.ly",
+        "api2-19.musical.ly",
+        "api2-t2.musical.ly",
+        "api2-16-h2.musical.ly",
+        "api2-19-h2.musical.ly",
+        "api2-21.musical.ly",
+        "api2-21-h2.musical.ly",
+        "api-musically.byted.org",
+        "api2-h2.musical.ly",
+        "api2-16.musical.ly",
+        "api2-30.musical.ly",
+        "api.toutiao50.com",
+        "api.tiktokv.com",
+        "api16.tiktokv.com",
+        "api-t1.tiktokv.com",
+        "api-t.tiktok.com",
+        "api19.tiktokv.com",
+        "api21.tiktokv.com",
+        "api30.tiktokv.com",
+        "api31.tiktokv.com",
+        "api32.tiktokv.com",
+        "api33.tiktokv.com",
+        "api34.tiktokv.com",
+        "api35.tiktokv.com",
+        "api36.tiktokv.com",
+        "api37.tiktokv.com",
+        "api38.tiktokv.com",
+        "api39.tiktokv.com",
+        "api-s1-h2.tiktokv.com",
+        "api-s1-quic.tiktokv.com",
+        "api-h2.tiktokv.com",
+        "api21-h2.tiktokv.com"
+      ],
+      "probe_enable": 1,
+      "req_err_api_cnt": 3,
+      "req_err_cnt": 10,
+      "req_err_host_cnt": 1,
+      "req_err_ip_cnt": 0,
+      "update_interval": 300,
+      "update_random_range": 300
+    },
+    "tt_ssl_config": {
+      "enable_file_cache": 1,
+      "file_cache_whitelist": [
+        "i-tb.sgsnssdk.com:443",
+        "sgali-dpprofile.byteoversea.com:443",
+        "dm.sgsnssdk.com:443"
+      ],
+      "session_timeout": 86400
+    },
+    "ttnet_dispatch_actions": [
+      {
+        "act_priority": 10000001,
+        "action": "dispatch",
+        "param": {
+          "contain_group": [
+            "/"
+          ],
+          "dispatch_strategy": 1,
+          "host_group": [
+            "webcast16.musical.ly",
+            "0pbxmo.xzcs3zlph.com",
+            "api19-normal-c-useast1a.musical.ly",
+            "api2-16-h2-eagle.musical.ly",
+            "api2-h2.musical.ly",
+            "api2-t2.musical.ly",
+            "imapi-16.musical.ly",
+            "api2-19-h2.musical.ly",
+            "log2.musical.ly",
+            "api16-core-c-useast1a.musical.ly",
+            "api19-core-c-useast1a.musical.ly",
+            "api2-16-quic.musical.ly",
+            "api.toutiao50.com",
+            "api2-19.musical.ly",
+            "api2-21-quic.musical.ly",
+            "api21-core-c-useast1a.musical.ly",
+            "webcast.musical.ly",
+            "api2-16.musical.ly",
+            "verification-va.musical.ly",
+            "webcast19.musical.ly",
+            "webcast21.musical.ly",
+            "api16-normal-c-useast1a.musical.ly",
+            "api2-16-h2.musical.ly",
+            "api2-19-h2-eagle.musical.ly",
+            "api2-21-h2.musical.ly",
+            "api2-22-quic.musical.ly",
+            "api2.musical.ly",
+            "api2-30.musical.ly",
+            "api21-normal-c-useast1a.musical.ly"
+          ],
+          "service_name": "auto_generate_default_gva",
+          "strategy_info": {
+            "0pbxmo.xzcs3zlph.com": "0pbxmo-useast2a.xzcs3zlph.com",
+            "api.toutiao50.com": "api-useast2a.toutiao50.com",
+            "api16-core-c-useast1a.musical.ly": "api16-core-c-useast2a.musical.ly",
+            "api16-normal-c-useast1a.musical.ly": "api16-normal-c-useast2a.musical.ly",
+            "api19-core-c-useast1a.musical.ly": "api19-core-c-useast2a.musical.ly",
+            "api19-normal-c-useast1a.musical.ly": "api19-normal-c-useast2a.musical.ly",
+            "api2-16-h2-eagle.musical.ly": "api2-16-h2-eagle-useast2a.musical.ly",
+            "api2-16-h2.musical.ly": "api2-16-h2-useast2a.musical.ly",
+            "api2-16-quic.musical.ly": "api2-16-quic-useast2a.musical.ly",
+            "api2-16.musical.ly": "api2-16-useast2a.musical.ly",
+            "api2-19-h2-eagle.musical.ly": "api2-19-h2-eagle-useast2a.musical.ly",
+            "api2-19-h2.musical.ly": "api2-19-h2-useast2a.musical.ly",
+            "api2-19.musical.ly": "api2-19-useast2a.musical.ly",
+            "api2-21-h2.musical.ly": "api2-21-h2-useast2a.musical.ly",
+            "api2-21-quic.musical.ly": "api2-21-quic-useast2a.musical.ly",
+            "api2-22-quic.musical.ly": "api2-22-quic-useast2a.musical.ly",
+            "api2-30.musical.ly": "api2-30-useast2a.musical.ly",
+            "api2-h2.musical.ly": "api2-h2-useast2a.musical.ly",
+            "api2-t2.musical.ly": "api2-t2-useast2a.musical.ly",
+            "api2.musical.ly": "api2-useast2a.musical.ly",
+            "api21-core-c-useast1a.musical.ly": "api21-core-c-useast2a.musical.ly",
+            "api21-normal-c-useast1a.musical.ly": "api21-normal-c-useast2a.musical.ly",
+            "imapi-16.musical.ly": "imapi-16-useast2a.musical.ly",
+            "log2.musical.ly": "log2-useast2a.musical.ly",
+            "verification-va.musical.ly": "verification-va-useast2a.musical.ly",
+            "webcast.musical.ly": "webcast-useast2a.musical.ly",
+            "webcast16.musical.ly": "webcast16-useast2a.musical.ly",
+            "webcast19.musical.ly": "webcast19-useast2a.musical.ly",
+            "webcast21.musical.ly": "webcast21-useast2a.musical.ly"
+          }
+        }
+      },
+      {
+        "act_priority": 10000000,
+        "action": "dispatch",
+        "param": {
+          "contain_group": [
+            "/api/ad/",
+            "/service/2/app_log/"
+          ],
+          "host_group": [
+            "*"
+          ]
+        },
+        "set_req_priority": -1
+      },
+      {
+        "act_priority": 201,
+        "action": "dispatch",
+        "param": {
+          "dispatch_strategy": 5,
+          "host_group": [
+            "security.snssdk.com"
+          ],
+          "pattern_group": [
+            "/passport/token/beat/.*",
+            "/passport/token/change/.*",
+            "/passport/user/logout/.*"
+          ],
+          "service_name": "mt_dispatch",
+          "strategy_info": {
+            "candidates": [
+              {
+                "host": "api2-19-h2.musical.ly",
+                "weight": 0
+              },
+              {
+                "host": "api2-16-h2.musical.ly",
+                "weight": 0
+              }
+            ],
+            "scheme_option": 1,
+            "working_mode": 1
+          }
+        },
+        "set_req_priority": 1000
+      },
+      {
+        "act_priority": 2001,
+        "action": "tc",
+        "param": {
+          "equal_group": [
+            "/aweme/v1/music/beats/songs"
+          ],
+          "host_group": [
+            "*"
+          ],
+          "path_replace": "/aweme/v1/music/beats/songs/"
+        }
+      },
+      {
+        "act_priority": 1020,
+        "action": "tc",
+        "param": {
+          "drop": 1,
+          "host_group": [
+            "*"
+          ],
+          "pattern_group": [
+            "/aweme/v1/testidc/"
+          ],
+          "service_name": "drop_testidc"
+        }
+      },
+      {
+        "act_priority": 1,
+        "action": "dispatch",
+        "param": {
+          "contain_group": [
+            "/service/2/device_sdk/stats_collect/"
+          ],
+          "dispatch_strategy": 1,
+          "host_group": [
+            "ib.snssdk.com"
+          ],
+          "service_name": "drop_device_sdk",
+          "strategy_info": {
+            "ib.snssdk.com": "unavailable.musical.ly"
+          }
+        }
+      },
+      {
+        "act_priority": 2,
+        "action": "dispatch",
+        "param": {
+          "contain_group": [
+            "/"
+          ],
+          "dispatch_strategy": 1,
+          "host_group": [
+            "ib.snssdk.com",
+            "i.snssdk.com",
+            "aweme.snssdk.com",
+            "amfr.snssdk.com",
+            "is.snssdk.com",
+            "mon.snssdk.com",
+            "gecko-va.snssdk.com"
+          ],
+          "service_name": "regular_reqs",
+          "strategy_info": {
+            "amfr.snssdk.com": "api2.musical.ly",
+            "aweme.snssdk.com": "api2.musical.ly",
+            "gecko-va.snssdk.com": "gecko-va.musical.ly",
+            "i.snssdk.com": "api2.musical.ly",
+            "ib.snssdk.com": "api2.musical.ly",
+            "is.snssdk.com": "api2.musical.ly",
+            "mon.snssdk.com": "mon.musical.ly"
+          }
+        }
+      },
+      {
+        "act_priority": 2,
+        "action": "tc",
+        "param": {
+          "contain_group": [
+            "/service/2/app_log/",
+            "/service/2/device_register/",
+            "/service/2/app_alert/",
+            "/service/2/app_alert_check/",
+            "/service/2/log_settings/"
+          ],
+          "host_replace": "applog.musical.ly"
+        }
+      },
+      {
+        "act_priority": 10001,
+        "action": "dispatch",
+        "param": {
+          "contain_group": [
+            "/"
+          ],
+          "dispatch_strategy": 1,
+          "host_group": [
+            "imapi-16.musical.ly"
+          ],
+          "service_name": "m_domain_replace",
+          "strategy_info": {
+            "imapi-16.musical.ly": "imapi-mu.isnssdk.com"
+          }
+        }
+      },
+      {
+        "act_priority": 5000,
+        "action": "tc",
+        "param": {
+          "host_group": [
+            "*.musical.ly"
+          ],
+          "host_replace": "api2-19-h2-eagle.musical.ly",
+          "pattern_group": [
+            "/aweme/v\\d+/feed/"
+          ]
+        }
+      },
+      {
+        "act_priority": 1,
+        "action": "dispatch",
+        "param": {
+          "equal_group": [
+            "/ies/speed/"
+          ],
+          "host_group": [
+            "*"
+          ]
+        },
+        "service_name": "speed",
+        "set_req_priority": 1000
+      },
+      {
+        "act_priority": 101,
+        "action": "dispatch",
+        "param": {
+          "dispatch_strategy": 5,
+          "host_group": [
+            "api2.musical.ly",
+            "api2-19-h2.musical.ly",
+            "api2-16-h2.musical.ly"
+          ],
+          "pattern_group": [
+            "/aweme/v\\d+/feed/.*",
+            "/aweme/.*",
+            "/tfe/api/request_combine/v\\d+/"
+          ],
+          "service_name": "mt_dispatch",
+          "strategy_info": {
+            "candidates": [
+              {
+                "host": "api2-19-h2.musical.ly",
+                "weight": 0
+              },
+              {
+                "host": "api2-16-h2.musical.ly",
+                "weight": 500
+              }
+            ],
+            "scheme_option": 1,
+            "working_mode": 1
+          }
+        },
+        "set_req_priority": 1000
+      },
+      {
+        "act_priority": 102,
+        "action": "dispatch",
+        "param": {
+          "dispatch_strategy": 5,
+          "host_group": [
+            "api2.musical.ly",
+            "aweme.snssdk.com",
+            "api2-19-h2.musical.ly",
+            "api2-16-h2.musical.ly"
+          ],
+          "pattern_group": [
+            "/feedback/\\d+/list/.*",
+            "/feedback/\\d+/common_feedback_list/.*",
+            "/feedback/\\d+/post_message/.*",
+            "/2/data/upload_image/.*"
+          ],
+          "service_name": "mt_dispatch",
+          "strategy_info": {
+            "candidates": [
+              {
+                "host": "api2-19-h2.musical.ly",
+                "weight": 0
+              },
+              {
+                "host": "api2-16-h2.musical.ly",
+                "weight": 500
+              }
+            ],
+            "scheme_option": 1,
+            "working_mode": 1
+          }
+        },
+        "set_req_priority": 1000
+      },
+      {
+        "act_priority": 20000,
+        "action": "dispatch",
+        "param": {
+          "contain_group": [
+            "/"
+          ],
+          "dispatch_strategy": 1,
+          "host_group": [
+            "api2.musical.ly"
+          ],
+          "service_name": "default",
+          "strategy_info": {
+            "api2.musical.ly": "api2-19-h2.musical.ly"
+          }
+        }
+      },
+      {
+        "act_priority": 40000,
+        "action": "dispatch",
+        "param": {
+          "dispatch_strategy": 5,
+          "host_group": [
+            "*.musical.ly"
+          ],
+          "pattern_group": [
+            "/aweme/v\\d+/feed/",
+            "/aweme/v\\d+/follow/feed/",
+            "/aweme/v\\d+/aweme/post/",
+            "/aweme/v\\d+/aweme/stats/",
+            "/aweme/v\\d+/user/",
+            "/aweme/v\\d+/user/profile/self/",
+            "/aweme/v\\d+/user/profile/other/",
+            "/aweme/v\\d+/create/aweme/"
+          ],
+          "service_name": "core_dispatch",
+          "strategy_info": {
+            "candidates": [
+              {
+                "host": "api2-19-h2-eagle.musical.ly",
+                "weight": 0
+              },
+              {
+                "host": "api2-16-h2-eagle.musical.ly",
+                "weight": 500
+              }
+            ],
+            "scheme_option": 1,
+            "working_mode": 1
+          }
+        }
+      }
+    ],
+    "ttnet_dispatch_actions_epoch": 1025610527,
+    "ttnet_enable_br": 1,
+    "ttnet_enable_cronet_request_report": 1,
+    "ttnet_h2_config": {
+      "hpack_optimization_common_params_set": [
+        "effect_channel",
+        "pass-region",
+        "pass-route",
+        "language",
+        "version_code",
+        "app_name",
+        "vid",
+        "app_version",
+        "carrier_region",
+        "is_my_cn",
+        "channel",
+        "mcc_mnc",
+        "device_id",
+        "tz_offset",
+        "account_region",
+        "sys_region",
+        "aid",
+        "residence",
+        "screen_width",
+        "uoo",
+        "openudid",
+        "os_api",
+        "os_version",
+        "app_language",
+        "tz_name",
+        "current_region",
+        "device_platform",
+        "build_number",
+        "device_type",
+        "iid",
+        "idfa",
+        "locale",
+        "allow_sell_data",
+        "cdid",
+        "content_language"
+      ],
+      "hpack_optimization_enabled_v2": 1,
+      "hpack_optimization_headers_set": [
+        ":path",
+        "x-tt-trace-id",
+        "x-khronos",
+        "x-gorgon",
+        "x-ss-stub",
+        "x-ss-req-ticket"
+      ],
+      "hpack_optimization_path_list": [
+        "/aweme/v1/aweme/post/",
+        "/aweme/v1/aweme/stats/",
+        "/aweme/v1/feed/",
+        "/aweme/v2/feed/",
+        "/aweme/v1/abtest/param/",
+        "/aweme/v1/play/stats/",
+        "/aweme/v1/rate/settings/",
+        "/aweme/v1/user/",
+        "/tfe/api/request_combine/v1/",
+        "/aweme/v1/im/reboot/misc/",
+        "/aweme/v1/check/in/",
+        "/aweme/v1/policy/",
+        "/aweme/v1/compliance/settings/",
+        "/aweme/v1/settings/",
+        "/aweme/v1/language/package/",
+        "/aweme/v1/notice/count/",
+        "/aweme/v1/ttregion/test/",
+        "/aweme/v1/personality/ad/get/",
+        "/aweme/v1/user/settings/",
+        "/aweme/v1/rec/new/",
+        "/aweme/v2/platform/share/settings/",
+        "/aweme/v1/anchor/list/",
+        "/aweme/v1/commerce/settings/",
+        "/aweme/v1/app/data/access/",
+        "/aweme/v1/device/benchmark/",
+        "/aweme/v1/im/resources/",
+        "/aweme/v1/comment/list/",
+        "/aweme/v1/commit/item/digg/",
+        "/aweme/v1/music/detail/",
+        "/aweme/v1/music/aweme/",
+        "/aweme/v1/notice/list/message/",
+        "/aweme/v1/commit/follow/user/",
+        "/aweme/v1/user/following/list/",
+        "/aweme/v1/comment/publish/",
+        "/aweme/v2/category/list/",
+        "/aweme/v1/user/follower/list/",
+        "/aweme/v1/challenge/search/",
+        "/aweme/v1/challenge/aweme/",
+        "/aweme/v1/discover/search/",
+        "/aweme/v1/create/aweme/",
+        "/aweme/v1/challenge/detail/",
+        "/aweme/v1/comment/digg/",
+        "/aweme/v1/notice/category/",
+        "/aweme/v1/search/sug/",
+        "/aweme/v1/music/search/",
+        "/aweme/v1/search/item/",
+        "/aweme/v1/general/search/single/"
+      ],
+      "ping_keepalive_hosts": [
+        "api16-core-c-useast1a.musical.ly:443",
+        "api19-core-c-useast1a.musical.ly:443",
+        "api21-core-c-useast1a.musical.ly:443",
+        "api16-core-c-useast2a.musical.ly:443",
+        "api19-core-c-useast2a.musical.ly:443",
+        "api21-core-c-useast2a.musical.ly:443",
+        "api16-core-c-alisg.tiktokv.com:443",
+        "api21-core-c-alisg.tiktokv.com:443",
+        "webcast.musical.ly",
+        "webcast-useast2a.musical.ly"
+      ],
+      "ping_keepalive_interval": 60,
+      "ping_probe_timeout": 5
+    },
+    "ttnet_h2_enabled": 1,
+    "ttnet_http_dns_addr": {
+      "api-h2-eagle.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api-h2.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api-t2.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api16-core-c-alisg.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api16-core-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api16-core-c-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api16-normal-c-alisg.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api16-normal-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api19-core-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api19-core-c-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api19-normal-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api19-normal-c-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-1.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-16-h2-eagle-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-16-h2-eagle.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-16-h2-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-16-h2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-16.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-19-h2-eagle-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-19-h2-eagle.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-19-h2-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-19-h2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-19.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-21-h2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-21.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-22-quic-useast2a.musical.ly": "35.241.42.67,2600:1901:0:8e03::",
+      "api2-22-quic.musical.ly": "34.98.93.234,2600:1901:0:29ac::",
+      "api2-h2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2-t2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api21-core-c-alisg.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api21-core-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api21-core-c-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api21-h2-eagle.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api21-h2.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api21-normal-c-alisg.tiktokv.com": "103.136.221.2,103.136.221.4,103.136.221.6,103.136.221.8",
+      "api21-normal-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api22-core-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api22-core-c-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api22-normal-c-useast1a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "api22-normal-c-useast2a.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "applog.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "dns.google.com": "216.58.220.206",
+      "i.byteoversea.com": "47.74.175.185,47.74.175.17,47.74.171.52,47.74.171.93",
+      "ichannel.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "imapi-16.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "imapi-16.tiktokv.com": "103.136.220.150,103.136.220.151,103.136.221.150,103.136.221.151",
+      "imapi-mu.isnssdk.com": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132",
+      "log.byteoversea.com": "47.74.175.185,47.74.175.17,47.74.171.52,47.74.171.93",
+      "log2.musical.ly": "199.103.24.2,199.103.24.4,199.103.24.6,199.103.24.8,130.44.212.132"
+    },
+    "ttnet_http_dns_enabled": 1,
+    "ttnet_http_dns_google": 1,
+    "ttnet_http_dns_prefer": 0,
+    "ttnet_local_dns_time_out": 2,
+    "ttnet_min_dns_ttl": {
+      "dns.google.com": 6000,
+      "m-p16.akamaized.net": 600,
+      "m-v16.akamaized.net": 600,
+      "p16.muscdn.com": 600,
+      "v16.muscdn.com": 600,
+      "v19.muscdn.com": 600
+    },
+    "ttnet_preconnect_urls": {
+      "http://p16.muscdn.com": 6,
+      "http://v16.muscdn.com": 1,
+      "http://v19.muscdn.com": 1,
+      "https://api16-core-c-useast1a.musical.ly": 1,
+      "https://api16-core-c-useast2a.musical.ly": 1,
+      "https://api16-normal-c-useast1a.musical.ly": 1,
+      "https://api16-normal-c-useast2a.musical.ly": 1,
+      "https://api19-core-c-useast1a.musical.ly": 1,
+      "https://api19-core-c-useast2a.musical.ly": 1,
+      "https://api19-normal-c-useast1a.musical.ly": 1,
+      "https://api19-normal-c-useast2a.musical.ly": 1,
+      "https://api2-16-h2-eagle-useast2a.musical.ly": 1,
+      "https://api2-16-h2-eagle.musical.ly": 1,
+      "https://api2-16-h2-useast2a.musical.ly": 1,
+      "https://api2-16-h2.musical.ly": 1,
+      "https://api2-19-h2-eagle-useast2a.musical.ly": 1,
+      "https://api2-19-h2-eagle.musical.ly": 1,
+      "https://api2-19-h2-useast2a.musical.ly": 1,
+      "https://api2-19-h2.musical.ly": 1,
+      "https://api2.musical.ly": 3,
+      "https://applog.musical.ly": 2,
+      "https://dns.google.com": 1,
+      "https://log2.musical.ly": 2
+    },
+    "ttnet_prefer_dns_addr": {
+      "dns.google": "8.8.4.4,2001:4860:4860::8844,8.8.8.8,2001:4860:4860::8888",
+      "dns.google.com": "8.8.4.4,2001:4860:4860::8844,8.8.8.8,2001:4860:4860::8888"
+    },
+    "ttnet_quic_enabled": 1,
+    "ttnet_quic_hint": {
+      "api-s1-quic.musical.ly": 443,
+      "api2-16-quic.musical.ly": 443,
+      "api2-21-quic.musical.ly": 443,
+      "api2-22-quic.musical.ly": 443,
+      "api2-gcpbr-quic.musical.ly": 443,
+      "dm-maliva-quic.byteoversea.com": 443,
+      "dm-sg-quic.byteoversea.com": 443,
+      "quic-awsbr.byteoversea.com": 443,
+      "quic-awsbr16-up.byteoversea.com": 443,
+      "quic-awsin.byteoversea.com": 443,
+      "quic-awsin16-up.byteoversea.com": 443,
+      "quic-awsjp.byteoversea.com": 443,
+      "quic-awsjp16-up.byteoversea.com": 443,
+      "quic-maliva16-up.muscdn.com": 443
+    },
+    "ttnet_quic_internal_param": {
+      "congestion_control_type": 4
+    },
+    "ttnet_request_count_network_changed": 20,
+    "ttnet_request_retry_delay_interval_ms": 500,
+    "ttnet_request_retry_error_list": [
+      -21,
+      -106,
+      -109,
+      -7,
+      -126
+    ],
+    "ttnet_retry_force_httpdns_error_list": [
+      -100
+    ],
+    "ttnet_socket_config": {
+      "triplicate_ip_numbers_less_than": 2
+    },
+    "ttnet_socket_pool_param": {
+      "used_idle_socket_timeout": 90
+    },
+    "ttnet_token_enabled": 0,
+    "ttnet_url_dispatcher_enabled": 1,
+    "use_dns_mapping": 0,
+    "varticle_frontier_urls": [
+      "wss://varticle-frontier.snssdk.com/ws/v2",
+      "ws://varticle-frontier.snssdk.com/ws/v2"
+    ]
+  },
+  "message": "success"
+}

@@ -1,0 +1,193 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "CloudFormation template for https://github.com/nariman-namazov/tiktok-hoarder."
+
+Parameters:
+    ChatID:
+        Type: String
+        Default: -1111111111111
+        Description: "Chat ID the lambda will be sending videos to."
+    
+    BucketName:
+        Type: String
+        Default: tiktok-hoarder-bucket
+        Description: "Name of the bucket."
+
+    LambdaName:
+        Type: String
+        Default: tiktok-hoarder
+        Description: "Name of the lambda."
+        
+    BotToken:
+        Type: String
+        Default: 1488133700:StRinGoftEXT
+        Description: "Your bot's token (without 'bot' part) from BotFather. Do NOT do this in PROD, follow AWS' best practices instead."
+        
+    Feedback:
+        Type: String
+        Default: "/dev/null"
+        Description: "Chat ID of either your conversation with the bot or any other place he is authorized to write into. If you do not want to have a feedback channel, just leave the default value."
+
+    Geolock:
+        Type: String
+        Default: "UA"
+        Description: "What region to geolock all videos to. Must be a ISO 3166 alpha-2 code."
+
+Resources:
+    IAMRole:
+        Type: AWS::IAM::Role
+        Properties:
+            RoleName: TikTokHoarderLambdaRole
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                  - Effect: Allow
+                    Principal:
+                      Service:
+                        - lambda.amazonaws.com
+                    Action:
+                      - sts:AssumeRole
+            ManagedPolicyArns:
+                - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+                - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
+
+    IAMPolicy:
+        Type: AWS::IAM::Policy
+        Properties:
+            PolicyName: TikTokHoarderS3Role
+            Roles:
+                - !Ref IAMRole
+            PolicyDocument:
+                Version: 2012-10-17
+                Statement:
+                    - Effect: Allow
+                      Action:
+                        - s3:List*
+                      Resource: "*"
+                    - Effect: Allow
+                      Action:
+                        - s3:PutObject
+                        - s3:Get*
+                      Resource: !Join
+                        - ""
+                        - - "arn:aws:s3:::"
+                          - !Ref Bucket
+                          - "/*"
+        DependsOn: IAMRole
+
+    Bucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Ref BucketName
+            AccessControl: BucketOwnerFullControl
+            PublicAccessBlockConfiguration: 
+                BlockPublicAcls: true
+                BlockPublicPolicy: true
+                IgnorePublicAcls: true
+                RestrictPublicBuckets: true
+            OwnershipControls:
+                Rules:
+                    - ObjectOwnership: BucketOwnerEnforced
+        DependsOn: IAMRole
+
+    BucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket: !Ref Bucket
+            PolicyDocument:
+                Version: 2012-10-17
+                Statement:    
+                    - Action:
+                        - s3:List*
+                      Effect: Allow
+                      Principal: "*"
+                      Resource: !Join
+                          - ""
+                          - - "arn:aws:s3:::"
+                            - !Ref Bucket
+                      Condition:
+                        ArnEquals:
+                          "aws:PrincipalArn": !Join
+                              - ""
+                              - - "arn:aws:iam::"
+                                - !Ref AWS::AccountId
+                                - ":role/"
+                                - !Ref IAMRole
+                    - Action:
+                        - s3:PutObject
+                        - s3:Get*
+                      Effect: Allow
+                      Principal: "*"
+                      Resource: !Join
+                          - ""
+                          - - "arn:aws:s3:::"
+                            - !Ref Bucket
+                            - "/*"
+                      Condition:
+                        ArnEquals:
+                          "aws:PrincipalArn": !GetAtt
+                              - IAMRole
+                              - Arn
+        DependsOn: Bucket
+
+    Lambda:
+        Type: AWS::Lambda::Function
+        Properties:
+            FunctionName: !Ref LambdaName
+            Runtime: python3.10
+            Timeout: 60
+            MemorySize: 1024
+            EphemeralStorage:
+                Size: 1024
+            Role: !GetAtt
+                - IAMRole
+                - Arn
+            Environment:
+                Variables:
+                    chat_id: !Ref ChatID
+                    bucket: !Ref BucketName
+                    token: !Ref BotToken
+                    feedback: !Ref Feedback
+                    geolock: !Ref Geolock
+            Handler: lambda_function.lambda_handler
+            Code:
+                ZipFile: |
+                    import json
+                    def lambda_handler(event, context):
+                        # TODO implement
+                        return {
+                            'statusCode': 200,
+                            'body': json.dumps('Ось цей увесь код треба буде замінити')
+                        }
+        DependsOn: BucketPolicy
+
+    CloudWatchGroup:
+        Type: AWS::Logs::LogGroup
+        Properties:
+            LogGroupName: !Join
+                - ""
+                - - "/aws/lambda/"
+                  - !Ref LambdaName
+            RetentionInDays: 1
+        DependsOn: Lambda
+
+    LambdaTriggerRule:
+        Type: AWS::Events::Rule
+        Properties:
+            Description: Runs tiktok-hoarder every minute.
+            EventBusName: default
+            Name: !Ref LambdaName
+            ScheduleExpression: rate(1 minute)
+            State: ENABLED
+            Targets:
+                - Id: !Ref LambdaName
+                  Arn: !GetAtt Lambda.Arn
+        DependsOn: Lambda
+    
+    LambdaPermissionRule:
+        Type: AWS::Lambda::Permission
+        Properties:
+            Action: lambda:InvokeFunction
+            Principal: events.amazonaws.com
+            FunctionName: !GetAtt Lambda.Arn
+            SourceArn: !GetAtt LambdaTriggerRule.Arn
+        DependsOn: LambdaTriggerRule
