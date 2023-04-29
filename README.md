@@ -63,14 +63,32 @@ https://www-useast1a.tiktok.com/passport/web/user/login/
 
 Китайці/японці народили https://juejin-cn.translate.goog/post/6985924948371963935?_x_tr_sl=zh-CN&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=sc&_x_tr_hist=true, а біла людина [реверснула](https://medium.com/@szdc/reverse-engineering-the-musical-ly-api-662331008eb3) API додатка.
 
-Заслуговує уваги і спроба австралійського співробітника Амазона написати обгортку довкола API ТікТока: https://github.com/szdc/tiktok-api, швидше за все в ньому і відповідть як логінитися в ТікТок без використання печивок з браузера.
+Заслуговує уваги і спроба австралійського співробітника Амазона написати обгортку довкола API ТікТока: https://github.com/szdc/tiktok-api. На основі кода доходимо висновку, що аутентифікація робиться плюс-мінус ось так:
+```python
+import requests
+
+def encrypt_data(string):
+    key = 5; encrypted = ""
+    # https://stackoverflow.com/questions/7291120/get-unicode-code-point-of-a-character-using-python
+    for c in string:
+        character = ord(c) ^ key; encrypted += str(hex(character)).split("0x")[1]
+
+    return encrypted
+
+payload = {
+    "mix_mode": 1,
+    "email": encrypt_data(<електронна пошта акаунта>),
+    "password": encrypt_data(<пароль>)
+}
+res = requests.post("https://www.tiktok.com/passport/user/login/", params=payload, headers={"Content-Type": "application/json"})
+print (res.content)
+```
+Швидше за все ця вузькоока шляпа викине у відповідь щось там про maximum attempts tried, але це просто захист від ботів, який все ж має якось обходитися, враховуюч що використання печивок без зайвих маніпуляцій з юзер-агентом чи подібних речей дає результати.
 
 ### Де ТікТок береже відео без вотермарок
 Його ж використовує yt-dlp для завантаження відео без вотермарок; варто додати, що будь-який `apiXY-normal-c` сервер містить у собі відео без них.
 ```
-
 https://api16-normal-c-useast1a.tiktokv.com
-
 ```
 
 ### Конфіг ТікТока
