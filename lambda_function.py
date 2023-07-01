@@ -103,7 +103,7 @@ def lambda_handler(event, context):
 
     # Getting videos from the personal feed.
     # Apparently, regardless of the query parameters TikTok will give you exactly 8 videos per GET request.
-    res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?type=0&app_name=trill&min_cursor=-1&max_cursor=0&region={GEOLOCK}&current_region={GEOLOCK}"", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
+    res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?type=0&app_name=trill&min_cursor=-1&max_cursor=0&region={GEOLOCK}", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
     authors_and_videos = {}
     # This is how geolock is additionally enforced, apart from passing geolock parameters.
     if video["author"]["region"] != GEOLOCK:
