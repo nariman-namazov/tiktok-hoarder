@@ -63,7 +63,7 @@ def shipToTelegram(username, videos):
         if not msg.json()["ok"]:
             print (f"Caught an error uploading {media} to Telegram:", msg.json())
             if FEEDBACK_CHANNEL != "/dev/null":
-                report = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", headers={"Content-Type": "application/json", "Cache-Control": "no-cache"}, json={"chat_id":FEEDBACK_CHANNEL, "is_personal": False, "text": f"Caught an error uploading {['https://www.tiktok.com/@' + username + '/video/' + _item for _item in videos]} to Telegram:\n{msg.json()}"})
+                report = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", headers={"Content-Type": "application/json", "Cache-Control": "no-cache"}, json={"chat_id":FEEDBACK_CHANNEL, "is_personal": False, "text": f"Caught an error uploading {['https://www.tiktok.com/@' + username + '/video/' + _item + '; ' for _item in videos]} to Telegram:\n{msg.json()}"})
                 if not report.json["ok"]:
                     print (f"Caught an error reporting another error to the feedback channel:\n{report.json()}")
     elif len(videos) != 0:
@@ -80,7 +80,7 @@ def shipToTelegram(username, videos):
         if not msg.json()["ok"]:
             print (f"Caught an error uploading {files} to Telegram:", msg.json())
             if FEEDBACK_CHANNEL != "/dev/null":
-                report = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", headers={"Content-Type": "application/json", "Cache-Control": "no-cache"}, json={"chat_id": FEEDBACK_CHANNEL, "is_personal": False, "text": f"Caught an error uploading {'https://www.tiktok.com/@' + username + '/video/' + videos} to Telegram:\n{msg.json()}"})
+                report = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", headers={"Content-Type": "application/json", "Cache-Control": "no-cache"}, json={"chat_id": FEEDBACK_CHANNEL, "is_personal": False, "text": f"Caught an error uploading {'https://www.tiktok.com/@' + username + '/video/' + videos[0]} to Telegram:\n{msg.json()}"})
                 if not report.json["ok"]:
                     print (f"Caught an error reporting another error to the feedback channel:\n{report.json()}")
 
@@ -103,7 +103,7 @@ def lambda_handler(event, context):
 
     # Getting videos from the personal feed.
     # Apparently, regardless of the query parameters TikTok will give you exactly 8 videos per GET request.
-    res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?type=0&app_name=trill&min_cursor=-1&max_cursor=0", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
+    res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?type=0&app_name=trill&min_cursor=-1&max_cursor=0&region={GEOLOCK}&current_region={GEOLOCK}"", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
     authors_and_videos = {}
     # This is how geolock is additionally enforced, apart from passing geolock parameters.
     if video["author"]["region"] != GEOLOCK:
