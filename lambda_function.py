@@ -99,15 +99,19 @@ def lambda_handler(event, context):
         cookies = get_cookies("/tmp/cookies.txt")
     else:
         cookies = get_cookies(BUCKET.split(":")[1])
-        
+
 
     # Getting videos from the personal feed.
     # Apparently, regardless of the query parameters TikTok will give you exactly 8 videos per GET request.
-    res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?max_cursor=0&min_cursor=-1&count=1&region={GEOLOCK}&current_region={GEOLOCK}", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
+    res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?type=0&app_name=trill&min_cursor=-1&max_cursor=0", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
     authors_and_videos = {}
-    for video in res:
+    # This is how geolock is additionally enforced, apart from passing geolock parameters.
+    if video["author"]["region"] != GEOLOCK:
+        print (f"Skipping https://www.tiktok.com/@{video['author']['unique_id']}/video/{video['aweme_id']} because it came from {video['author']['region']} instead of {GEOLOCK}.")
+        continue
+    else:
         authors_and_videos.setdefault(video["author"]["unique_id"], []).append(video["aweme_id"])
-    
+
     # TODO: run this for loop in threads instead and download videos in threads as well.
     threadz = [Thread(target=shipToTelegram, args=[author, authors_and_videos[author]]) for author in authors_and_videos]
     [t.start() for t in threadz]
