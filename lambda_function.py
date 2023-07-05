@@ -8,6 +8,13 @@ from glob import glob
 3. Iterate through the dictionaries and push each video to Telegram.
 """
 
+# Converting duration from ffmpeg's output into seconds Telegram will comprehend.
+def time(time):
+    chunks = time.split("\n")[0].split(":")
+    seconds = int(chunks[0]) * 60 * 60 + int(chunks[1]) * 60 + int(chunks[2])
+
+    return int(seconds)
+
 # Opening cookies.txt file and using the data from there. Has to be uploaded to S3 manually by someone.
 # Pulling a file with TikTok cookies from the browser because TikTok authentication via passport/web/user/login/ is too complicated for my brain. :^)
 def get_cookies(cookies_path):
@@ -50,8 +57,13 @@ def shipToTelegram(username, videos):
         print ("All {len(videos)} threads finished running.")
         # Request requirements with a single video are different from those of a request with several videos.
         for _file in glob(f"/tmp/{username}*.mp4"):
-            files[_file] = open(_file, "rb")
-            media.append({"type": "video", "media": f"attach://{_file}"})
+            thumb = _file.split(".mp4")[0] + "_thumb.jpg"
+            # Do three things simultaneously: 1) create a thumbnail, 2) get video duration, and 3) get video resolution.
+            cmd_str = f"""/var/task/ffmpeg -y -i {_file} -vf scale=w='min(320\, iw*3/2):h=-1' -vframes 1 {thumb} 2>&1 | grep -oP '(Duration: \K[0-9]+:[0-9]+:[0-9]+)|(Stream .*, \K[0-9]+x[0-9]+)' | head -2"""
+            event = subprocess.run(cmd_str, shell=True, capture_output=True, text=True)
+            duration = time(event.stdout); height = int(event.stdout.split("\n")[1].split("x")[1]); width = int(event.stdout.split("\n")[1].split("x")[0])
+            files[_file] = open(_file, "rb"); files[thumb] = open(thumb, "rb")
+            media.append({"type": "video", "media": f"attach://{_file}", "thumbnail": f"attach://{thumb}", "supports_streaming": True, "width": width, "height": height, "duration": duration})
         # https://stackoverflow.com/questions/58893142/how-to-send-telegram-mediagroup-with-caption-text
         media[0]["caption"] = f"Завантажено з допомогою tiktok-hoarder.\nhttps://www.tiktok.com/@{username}"
         payload = {
@@ -67,14 +79,21 @@ def shipToTelegram(username, videos):
                 if not report.json["ok"]:
                     print (f"Caught an error reporting another error to the feedback channel:\n{report.json()}")
     elif len(videos) != 0:
-        print ("A thread finished running.")
-        files = {"video": (f"{username}-{videos[0]}.mp4", open(f"/tmp/{username}-{videos[0]}.mp4", "rb"))}
+        thumb = "{username}-{videos[0]}_thumb.jpg"
+        # Do three things simultaneously: 1) create a thumbnail, 2) get video duration, and 3) get video resolution.
+        cmd_str = f"""/var/task/ffmpeg -y -i {username}-{videos[0]}.mp4 -vf scale=w='min(320\, iw*3/2):h=-1' -vframes 1 {thumb} 2>&1 | grep -oP '(Duration: \K[0-9]+:[0-9]+:[0-9]+)|(Stream .*, \K[0-9]+x[0-9]+)' | head -2"""
+        event = subprocess.run(cmd_str, shell=True, capture_output=True, text=True)
+        duration = time(event.stdout); height = int(event.stdout.split("\n")[1].split("x")[1]); width = int(event.stdout.split("\n")[1].split("x")[0])
+        files = {"video": (f"{username}-{videos[0]}.mp4", open(f"/tmp/{username}-{videos[0]}.mp4", "rb"), "thumbnail": (f"{thumb}", open("{thumb}",   "rb")))}
         payload = {
             "chat_id": CHAT_ID,
             "caption": f"Завантажено з допомогою tiktok-hoarder.\nhttps://www.tiktok.com/@{username}",
             "is_personal": False,
             "disable_notification": True,
-            "supports_streaming": True
+            "supports_streaming": True,
+            "duration": duration,
+            "height": height,
+            "width": width
         }
         msg = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendVideo", data=payload, files=files)
         if not msg.json()["ok"]:
@@ -112,7 +131,6 @@ def lambda_handler(event, context):
     else:
         authors_and_videos.setdefault(video["author"]["unique_id"], []).append(video["aweme_id"])
 
-    # TODO: run this for loop in threads instead and download videos in threads as well.
     threadz = [Thread(target=shipToTelegram, args=[author, authors_and_videos[author]]) for author in authors_and_videos]
     [t.start() for t in threadz]
     [t.join() for t in threadz]
