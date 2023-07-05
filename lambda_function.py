@@ -40,11 +40,11 @@ def collectVideoIds(username):
 # The multithreaded function.
 def downloadVideo(username, video):
     cmd_str = f"/var/task/yt-dlp --config-locations /var/task/yt-dlp.conf https://www.tiktok.com/@{username}/video/{video}"
-    _event = subprocess.run(cmd_str, shell=True, capture_output=True, text=True)
+    event = subprocess.run(cmd_str, shell=True, capture_output=True, text=True)
     try:
-        print (f"All good: {_event.stdout}")
+        print (f"All good: {event.stdout}")
     except:
-        print (f"All bad: {_event.stderr}")
+        print (f"All bad: {event.stderr}")
 
 def shipToTelegram(username, videos):
     files = {}; media = []
@@ -54,7 +54,6 @@ def shipToTelegram(username, videos):
     [t.join() for t in threadz]
 
     if len(videos) > 1:
-        print ("All {len(videos)} threads finished running.")
         # Request requirements with a single video are different from those of a request with several videos.
         for _file in glob(f"/tmp/{username}*.mp4"):
             thumb = _file.split(".mp4")[0] + "_thumb.jpg"
@@ -79,12 +78,12 @@ def shipToTelegram(username, videos):
                 if not report.json["ok"]:
                     print (f"Caught an error reporting another error to the feedback channel:\n{report.json()}")
     elif len(videos) != 0:
-        thumb = "{username}-{videos[0]}_thumb.jpg"
+        thumb = f"/tmp/{username}-{videos[0]}_thumb.jpg"
         # Do three things simultaneously: 1) create a thumbnail, 2) get video duration, and 3) get video resolution.
-        cmd_str = f"""/var/task/ffmpeg -y -i {username}-{videos[0]}.mp4 -vf scale=w='min(320\, iw*3/2):h=-1' -vframes 1 {thumb} 2>&1 | grep -oP '(Duration: \K[0-9]+:[0-9]+:[0-9]+)|(Stream .*, \K[0-9]+x[0-9]+)' | head -2"""
+        cmd_str = f"""/var/task/ffmpeg -y -i /tmp/{username}-{videos[0]}.mp4 -vf scale=w='min(320\, iw*3/2):h=-1' -vframes 1 {thumb} 2>&1 | grep -oP '(Duration: \K[0-9]+:[0-9]+:[0-9]+)|(Stream .*, \K[0-9]+x[0-9]+)' | head -2"""
         event = subprocess.run(cmd_str, shell=True, capture_output=True, text=True)
         duration = time(event.stdout); height = int(event.stdout.split("\n")[1].split("x")[1]); width = int(event.stdout.split("\n")[1].split("x")[0])
-        files = {"video": (f"{username}-{videos[0]}.mp4", open(f"/tmp/{username}-{videos[0]}.mp4", "rb"), "thumbnail": (f"{thumb}", open("{thumb}",   "rb")))}
+        files = {"video": (f"{username}-{videos[0]}.mp4", open(f"/tmp/{username}-{videos[0]}.mp4", "rb")), "thumbnail": (f"{thumb}", open(f"{thumb}", "rb"))}
         payload = {
             "chat_id": CHAT_ID,
             "caption": f"Завантажено з допомогою tiktok-hoarder.\nhttps://www.tiktok.com/@{username}",
@@ -125,11 +124,12 @@ def lambda_handler(event, context):
     res = requests.get(f"https://api19-va.tiktokv.com/aweme/v1/feed/?type=0&app_name=trill&min_cursor=-1&max_cursor=0&region={GEOLOCK}", cookies=cookies, headers={"Content-Type": "application/json"}).json()["aweme_list"]
     authors_and_videos = {}
     # This is how geolock is additionally enforced, apart from passing geolock parameters.
-    if video["author"]["region"] != GEOLOCK:
-        print (f"Skipping https://www.tiktok.com/@{video['author']['unique_id']}/video/{video['aweme_id']} because it came from {video['author']['region']} instead of {GEOLOCK}.")
-        continue
-    else:
-        authors_and_videos.setdefault(video["author"]["unique_id"], []).append(video["aweme_id"])
+    for video in res:
+        if video["author"]["region"] != GEOLOCK:
+            print (f"Skipping https://www.tiktok.com/@{video['author']['unique_id']}/video/{video['aweme_id']} because it came from {video['author']['region']} instead of {GEOLOCK}.")
+            continue
+        else:
+            authors_and_videos.setdefault(video["author"]["unique_id"], []).append(video["aweme_id"])
 
     threadz = [Thread(target=shipToTelegram, args=[author, authors_and_videos[author]]) for author in authors_and_videos]
     [t.start() for t in threadz]
